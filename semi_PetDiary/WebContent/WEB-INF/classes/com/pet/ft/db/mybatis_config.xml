@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="com/pet/ft/db/db.properties"/>
+  <typeAliases>
+  		<typeAlias type="com.pet.ft.dto.CommunityDto" alias="CommunityDto"/>
+  		<typeAlias type="com.pet.ft.dto.MemberDto" alias="MemberDto"/>  
+  		<typeAlias type="com.pet.ft.dto.BusinessDto" alias="BusinessDto"/>		  		
+  		<typeAlias type="com.pet.ft.dto.BookDto" alias="BookDto"/>		  		
+  		<typeAlias type="com.pet.ft.dto.CalendarDto" alias="CalendarDto"/>  	  		
+      <typeAlias type="com.pet.ft.dto.DiaryDto" alias="diaryDto"/>
+      <typeAlias type="com.pet.ft.dto.PetDto" alias="petDto"/>
+      <typeAlias type="com.pet.ft.dto.PictureDto" alias="pictureDto"/>
+  </typeAliases>
+
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@qclass.iptime.org:1521:xe"/>
+        <property name="username" value="big3semi03"/>
+        <property name="password" value="semi03"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="com/pet/ft/db/pet_mapper.xml"/>
+  </mappers>
+</configuration>

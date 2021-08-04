@@ -1,0 +1,29 @@
+
+#welcome img{
+	width: 500px;
+	height: 500px;
+	position: absolute;
+	top: 20%;
+	left: 5%;
+
+}
+#welcome div {
+	font-size: 12px;
+	position: absolute;
+	top: 20%;
+	left: 32%;
+
+}
+
+#logbox{
+	width: 200px;
+	height: 100px;
+	position : absolute;
+	top: 200px;
+	right: 175px;
+
+}
+#logbutton{
+	width: 176px;
+	height: 30px;
+}

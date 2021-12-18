@@ -572,42 +572,6 @@ public class pet_servlet extends HttpServlet {
 
 
 		}
-		
-
-		// 회원가입 페이지로 이동
-		if("login_signup".equals(command)) {
-			response.sendRedirect(loginDirectory+"signup.jsp");
-		}
-
-
-		// 회원가입 insert
-		if("login_signupForm".equals(command)) {
-			String member_id = request.getParameter("member_id");
-			String member_pw = request.getParameter("member_pw");
-			String member_name = request.getParameter("member_name");
-			String member_email = request.getParameter("member_email");
-			String member_phone = request.getParameter("member_phone");
-			String member_addr = request.getParameter("member_addr");
-			String member_addr_detail = request.getParameter("member_addr_detail");
-
-			String memberaddress = member_addr + " " + member_addr_detail;
-
-			MemberDto dto = new MemberDto();
-
-			dto.setMember_id(member_id);
-			dto.setMember_pw(member_pw);
-			dto.setMember_name(member_name);
-			dto.setMember_email(member_email);
-			dto.setMember_phone(member_phone);
-			dto.setMember_address(memberaddress);
-
-			int res = dao.MemberInsert(dto);
-			if (res > 0) {
-				jsResponse(response, "회원가입이 완료되었습니다.", "main/main.jsp");
-			} else {
-				jsResponse(response, "회원가입 실패", "login/login_signup.jsp");
-			}
-		}
 
 		// 일정 리스트
 		if("calendarlist".equals(command)) {
@@ -830,41 +794,13 @@ public class pet_servlet extends HttpServlet {
         	int member_no = Integer.parseInt(request.getParameter("member_no"));
         	dispatch(request, response, "myinfo/myinfo_businessup.jsp?member_no="+member_no);
         }
-      
-
-    	if("login_login".equals(command)) {
-			response.sendRedirect(loginDirectory+"login.jsp");
-		}	
-     	
-    	if("login_loginForm".equals(command)) {
-
-    		String member_id = request.getParameter("member_id");
-    		String member_pw = request.getParameter("member_pw");
-    		MemberDto dto = biz.Login(member_id, member_pw);
-
-    		if(dto != null) {
-    			session.setAttribute("dto", dto);
-    			session.setAttribute("member_no", dto.getMember_no());
-    			session.setMaxInactiveInterval(3600);
-
-    			if (dto.getMember_role().equals("ADMIN")) {
-    				response.sendRedirect("main/main.jsp");
-    			} else if (dto.getMember_role().equals("USER")) {
-    				response.sendRedirect("main/main.jsp");
-    			} else if (dto.getMember_role().equals("EMPLOYEE")) {
-    				response.sendRedirect("main/main.jsp");
-
-    			}
-    		} else {
-    			jsResponse(response, "가입하지 않은 아이디거나, 잘못된 비밀번호입니다.", loginDirectory+"login.jsp");
-    		}
-    			
-    	}  
+        
 
 		if("myinfo_update".equals(command)) {
     		response.sendRedirect("myinfo/myinfo_update.jsp");
     	}
     	
+		
     	if("myinfo_updateform".equals(command)) {
     		int member_no = Integer.parseInt(request.getParameter("member_no"));
 			String member_pw = request.getParameter("member_pw");
@@ -1470,15 +1406,6 @@ public class pet_servlet extends HttpServlet {
 
      	}
      	
-    	if("login_logout".equals(command)) {
-    		if (session != null) {
-    			session.invalidate();
-    		} else {
-    			
-    		}
-    		response.sendRedirect("main/main.jsp");
-   		}
-    	
     	
     	if("StartRTC".equals(command)) {
 			System.out.println("성공");

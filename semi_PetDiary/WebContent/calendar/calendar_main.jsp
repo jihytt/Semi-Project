@@ -1,7 +1,5 @@
 <%@page import="com.pet.ft.dto.CalendarDto"%>
-<%@page import="java.sql.Array"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.HashMap"%>
 <%@page import="com.pet.ft.model.PetDao"%>
 <%@page import="com.pet.ft.model.PetDaoImpl"%>
 <%@page import="com.pet.ft.controller.pet_util"%>
@@ -19,7 +17,7 @@ response.setContentType("text/html; charset=UTF-8");
 <title>캘린더</title>
 <style type="text/css">
 
-	#wrap { position : absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+	#wrap { position : absolute; }
 	
 	select { border : 1px solid white; }
 	
@@ -75,7 +73,7 @@ function calendar_list(year, month, d, member_no) {
 	var popupX = (window.screen.width / 2) - (popupWidth / 2);
 	var popupY= (window.screen.height / 2) - (popupHeight / 2);
 		
-	open("../pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no, "", 'height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY + 'resizable=no');
+	open("/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no, "", 'height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY + 'resizable=no');
 }
 
 </script>
@@ -116,13 +114,12 @@ function calendar_list(year, month, d, member_no) {
 	int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	int lastDay = cal.getActualMaximum(Calendar.DATE);
 	int member_no = (int) session.getAttribute("member_no");
-	
 	String yyyyMM = year + util.isTwo(String.valueOf(month));
 	List<CalendarDto> list = dao.CalViewList(member_no, yyyyMM);
 %>
 	<div id = "wrap">
 		<div id= "sform">
-			<form method="post" action="calendar_main.jsp">
+			<form method="post" action="/semi_PetDiary/calendar/calendar_main.jsp">
 			<i class="far fa-calendar-alt"></i>
 			<select name="year">
 <%			
@@ -148,11 +145,11 @@ function calendar_list(year, month, d, member_no) {
 		<br/>
 		<table id = "calendar">
 			<caption>
-				<a href="../calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-left"></i></a>
-				<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon"><i class="fas fa-angle-left"></i></a>
+				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-left"></i></a>
+				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon"><i class="fas fa-angle-left"></i></a>
 				<span class="y"><%=year %>년</span> <span class="m"><%=month%>월</span>
-				<a href="../calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon"><i class="fas fa-angle-right"></i></a>
-				<a href="../calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-right"></i></a>
+				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon"><i class="fas fa-angle-right"></i></a>
+				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-right"></i></a>
 			</caption>
 			<tr id="day">
 				<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
@@ -176,7 +173,7 @@ function calendar_list(year, month, d, member_no) {
 			}
 %>				
 			<td id="dates">
-				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastday=<%=lastDay %>'"><%=d%></a>
+				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastDay=<%=lastDay %>'"><%=d%></a>
 				<div>
 				<a id="calendar_list" style="cursor: pointer; color: black" href="javascript:calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=member_no%>')">			
 					<%=util.getCalView(d, list)%>

@@ -209,16 +209,10 @@
 			alert("주소를 정확히 입력해주세요.");
 			return false;
 		} else {
-			alert("회원가입이 완료되었습니다.");
 			return true;
 		}
 	}
 	
-	function back(){
-		history.back();
-	}
-	
-		
 </script>
 </head>
 <body>
@@ -284,7 +278,7 @@
 					<div>
 						<div id="signup">
 							<input type="submit" value="가입 하기"/>
-							<input type="button" value="취소" onclick="back();"/>
+							<input type="button" value="취소" onclick="history.back();"/>
 						</div>
 					</div>
 				</div>

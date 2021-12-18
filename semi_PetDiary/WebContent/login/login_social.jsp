@@ -31,7 +31,7 @@ response.setContentType("text/html; charset=UTF-8"); %>
 
       function searchAddr() {
         var pop = window.open(
-          "../login/login_addrChk.jsp",
+          "/semi_PetDiary/login/login_addrChk.jsp",
           "pop",
           "width=570,height=420"
         );

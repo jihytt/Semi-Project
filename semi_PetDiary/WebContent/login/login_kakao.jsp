@@ -56,7 +56,7 @@
 		} else {
 			$.ajax({
 				type : "POST",
-				url : "../login.do?command=login_emailchk&member_email="+encodeURIComponent(email.value),
+				url : "/semi_PetDiary/login.do?command=login_emailchk&member_email="+encodeURIComponent(email.value),
 				dataType : "json",
 				success : function(result){
 					var res = JSON.stringify(result.emailnotused);
@@ -87,7 +87,7 @@
 		else {
 			$.ajax({
 				type : "POST",
-				url : "../login.do?command=login_emailAuth&member_email_auth="+encodeURIComponent(emailauth.value),
+				url : "/semi_PetDiary/login.do?command=login_emailAuth&member_email_auth="+encodeURIComponent(emailauth.value),
 				dataType : "json",
 				success : function(result){
 					var res = JSON.stringify(result.result);
@@ -117,7 +117,7 @@
 	}
 
 	function searchAddr() {
-		  var pop = window.open("../login/login_addrChk.jsp","pop","width=570,height=420"); 
+		  var pop = window.open("/semi_PetDiary/login/login_addrChk.jsp","pop","width=570,height=420"); 
 	}
 	
 	function jusoCallBack(roadAddrPart1, roadAddrPart2,addrDetail){

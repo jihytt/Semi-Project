@@ -82,7 +82,7 @@
 		<div id="naverLogin">
 <%
 	    String clientId = "n8OVzf4XjGNAd8jAA6Hi";//애플리케이션 클라이언트 아이디값";
-	    String redirectURI = URLEncoder.encode("http://localhost:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
+	    String redirectURI = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString();
 	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
@@ -91,18 +91,18 @@
 	    apiURL += "&state=" + state;
 	    session.setAttribute("state", state);
 %>
-	  		<a href="<%=apiURL%>"><img width="250px" height="40px" src="${pageContext.request.contextPath}/resources/image/naverlogo.png"/></a>			
+	  		<a href="<%=apiURL%>"><img width="270px" src="${pageContext.request.contextPath}/resources/image/naverlogo.png"/></a>			
 		</div>
 		
 		<div id="kakaoLogin">
 <%
 		String client_id = "39cbfc25bdd943573118565016e1297d";
-		String redirect_uri = URLEncoder.encode("http://localhost:8787/semi_PetDiary/login.do?command=kakao_login", "UTF-8");
+		String redirect_uri = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=kakao_login", "UTF-8");
 		String prompt = "login";
 		String kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&response_type=code&" + "&state=" + state + "&prompt=" + prompt;
 %>
 			<a href="<%=kakao_apiURL %>" id="kakao-login-btn">
-	    <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="250px;"/>
+	    <img src="${pageContext.request.contextPath}/resources/image/kakaologo.png" width="270px;"/>
 	    </a>
 		</div>
 	</div>

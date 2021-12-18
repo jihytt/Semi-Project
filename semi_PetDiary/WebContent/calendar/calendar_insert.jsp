@@ -30,9 +30,9 @@
 	
 	textarea { border : 1px solid #ccc; border-radius:10px; margin: 10px; }
 	
-	#insert input[type='button'] { border: salmon 2px solid; border-radius:5px; height: 25px;  background-color: white; }
+	#insert input[type='button'] { border: salmon 2px solid; border-radius:5px; height: 25px;  background-color: white; cursor: pointer;}
 	
-	#insert input[type='submit'] { border: salmon 2px solid; color: white; border-radius:5px;  height: 25px; background-color: salmon; }
+	#insert input[type='submit'] { border: salmon 2px solid; color: white; border-radius:5px;  height: 25px; background-color: salmon; cursor: pointer;}
 
 </style>
 <script src="https://kit.fontawesome.com/95780683f0.js" crossorigin="anonymous"></script>
@@ -47,8 +47,8 @@
 	int year = Integer.parseInt(request.getParameter("year"));
 	int month = Integer.parseInt(request.getParameter("month"));
 	int date = Integer.parseInt(request.getParameter("date"));
-	int lastday = Integer.parseInt(request.getParameter("lastday"));
-	
+	int lastDay = Integer.parseInt(request.getParameter("lastDay"));
+		
 	Calendar cal = Calendar.getInstance();
 	int hour = cal.get(Calendar.HOUR_OF_DAY);
 	int min = cal.get(Calendar.MINUTE);
@@ -79,7 +79,7 @@
 				</select>월
 				<select name="s_date" id="s_date">
 <%
-					for (int i = 0; i < lastday; i++) {
+					for (int i = 0; i <= lastDay; i++) {
 %>
 					<option value="<%=i %>" <%=(date==i)? "selected": "" %>><%=i %></option>	
 <%
@@ -127,7 +127,7 @@
 				</select>월
 				<select name="e_date">
 <%
-					for (int i = 0; i < lastday; i++) {
+					for (int i = 0; i <= lastDay; i++) {
 %>
 					<option value="<%=i %>" <%=(date==i)? "selected": "" %>><%=i %></option>	
 <%

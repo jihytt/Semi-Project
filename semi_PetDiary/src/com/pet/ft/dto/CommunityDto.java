@@ -12,7 +12,7 @@ public class CommunityDto {
 	private int community_reportcount;
 	private String community_reportcontent;
 	private int community_no;
-	private int comment_no;
+	private int community_comment;
 	private int community_like;
 	private int community_views;	
 	private int member_no;
@@ -34,7 +34,7 @@ public class CommunityDto {
 		this.community_report = community_report;
 		this.community_reportcount = community_reportcount;
 		this.community_no = community_no;
-		this.comment_no = comment_no;
+		this.community_comment = community_comment;
 		this.member_no = member_no;
 	}
 
@@ -50,7 +50,7 @@ public class CommunityDto {
 		this.community_reportcount = community_reportcount;
 		this.community_reportcontent = community_reportcontent;
 		this.community_no = community_no;
-		this.comment_no = comment_no;
+		this.community_comment = community_comment;
 		this.community_like = community_like;
 		this.community_views = community_views;
 		this.member_no = member_no;
@@ -121,11 +121,11 @@ public class CommunityDto {
 	}
 
 	public int getComment_no() {
-		return comment_no;
+		return community_comment;
 	}
 
 	public void setComment_no(int comment_no) {
-		this.comment_no = comment_no;
+		this.community_comment = community_comment;
 	}
 
 	public int getCommunity_like() {

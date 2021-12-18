@@ -11,64 +11,67 @@
 <head>
     <title>Title</title>
     <style type="text/css">
-
-        .iframe {
-            display: block;
-            border: none;
-            /*상단 숨김 코드*/
-            width: 500px;
-            height: 650px;
-            margin-top: -50px;
+    	.pet_info_main{
+            height: 100%;
         }
-
+        .iframe {
+            box-sizing: border-box;
+            border: none;
+            width: 100%;
+            height: 600px;
+        }
         .pet_update > a:visited, .pet_update > a:link {
             text-decoration: none;
             color: black;
-         }
-
+        }
+        .pet_update {
+            position: absolute;
+            bottom: 20%;
+            left: 45%;
+        }
         div > p {
             padding-top: 50px;
             border: 1px solid salmon;
         }
-        .pet_info{
-            margin-top: 50px;
-            float: left;
-            width: 500px;
-            height: 500px;
-            margin-left: 100px;
+        .pet_info {
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align:middle;
+            width: 30%;
+            height: 600px;
+            margin-top: 5%;
+            margin-left: 2%;
         }
-
         .pet_info_style {
+            box-sizing: border-box;
             border-collapse: collapse;
-            margin: 25px 0;
+            margin-top: 10%;
+            margin-left: 10%;
             font-size: 0.9em;
             font-family: sans-serif;
             min-width: 400px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             border-radius: 6px ;
         }
-
-
+        #petImg{box-sizing: border-box;
+            width: 100%;}
         .pet_info_style tr th {
             background-color: salmon;
             color: #ffffff;
             text-align: left;
             width: 70px;
         }
-
         .pet_info_style tr:first-child th:first-child {
             border-radius: 6px 0 0 0 ;
         }
         .pet_info_style tr:last-child th:first-child {
             border-radius: 0 0 0 6px;
         }
-
         .pet_info_style th,
         .pet_info_style td {
             padding: 12px 15px;
             text-align: center;
         }
-
         .pet_info_style tr {
             border-bottom: 1px solid #dddddd;
         }
@@ -80,7 +83,6 @@
             margin-right: 8%;
             float: right;
         }
-
         input[type=button] {
             background-color: salmon;
             color: white;
@@ -91,10 +93,11 @@
 
         #empty {
             margin-top: 100px;
+            margin-bottom: 32.5%;
         }
     </style>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/paging.js"></script>
+    <script src="/semi_PetDiary/resources/javascript/paging.js"></script>
 </head>
 <body>
 
@@ -103,7 +106,6 @@
     int member_no = (int) session.getAttribute("member_no");
     PetBiz biz = new PetBizImpl();
     List<PetDto> list = biz.selectPetList(member_no);
-
     if (list.isEmpty()) {
 %>
     <div id="empty" align="center">
@@ -118,9 +120,9 @@ else {
     String petName = list.get(0).getPet_name();
     String petSpecies = list.get(0).getPet_species();
     String petBreed = list.get(0).getPet_breed();
-    String petBirth = list.get(0).getPet_birthday().substring(0, 10);
+    String petBirth = list.get(0).getPet_birthday();
     String petGender = list.get(0).getPet_gender();
-    String petVaccin = list.get(0).getPet_vaccination().substring(0, 10);
+    String petVaccin = list.get(0).getPet_vaccination();
     String path = list.get(0).getPet_path();
 %>
     <div class="pet_info_main">
@@ -154,16 +156,16 @@ else {
                     <td id="petVaccination"><%=petVaccin%></td>
                 </tr>
             </table>
-        </div>
+          </div>
         <div class="pet_info">
-            <iframe src="../pet.do?command=calendar_calMain" class="iframe" >
+            <iframe src="/semi_PetDiary/pet.do?command=calendar_calMain" class="iframe" >
             </iframe>
         </div>
     </div>
 <div class="pet_update">
     <input type="button" value="추가" onclick="window.open('pet/pet_insert.jsp', 'insert', 'left=50, top=50, width=520, height=750')">
-    <input type="button" id="petDel" value="삭제" onclick="location.href='../pet_servlet?command=pet_delete&pet_no=<%=petNo%>'">
-    <input type="button" id="petUp" value="수정" onclick="window.open('../pet_servlet?command=pet_update_form&pet_no=<%=petNo%>', 'update', 'left=50, top=50, width=520, height=750')">
+    <input type="button" id="petDel" value="삭제" onclick="location.href='/semi_PetDiary/pet_servlet?command=pet_delete&pet_no=<%=petNo%>'">
+    <input type="button" id="petUp" value="수정" onclick="window.open('/semi_PetDiary/pet_servlet?command=pet_update_form&pet_no=<%=petNo%>', 'update', 'left=50, top=50, width=520, height=750')">
     <%
         for (int i = 1; i <= totalCount; i++) {
     %>

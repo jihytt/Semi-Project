@@ -213,7 +213,7 @@ public class login_servlet extends HttpServlet {
 				    String clientSecret = "B9Pqf7aDXD";//애플리케이션 클라이언트 시크릿값";
 				    String code = request.getParameter("code");
 				    String state = request.getParameter("state");
-				    String redirectURI = URLEncoder.encode("http://localhost:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
+				    String redirectURI = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
 				    String apiURL;
 				    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 				    apiURL += "client_id=" + clientId;
@@ -359,7 +359,7 @@ public class login_servlet extends HttpServlet {
 				
 
 				String client_id = "39cbfc25bdd943573118565016e1297d";
-				String redirect_uri = URLEncoder.encode("http://localhost:8787/semi_PetDiary/login.do?command=kakao_login", "UTF-8");
+				String redirect_uri = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=kakao_login", "UTF-8");
 				String code = request.getParameter("code");
 				String state = request.getParameter("state");
 				

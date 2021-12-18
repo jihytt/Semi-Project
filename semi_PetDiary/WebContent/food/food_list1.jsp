@@ -6,6 +6,8 @@
 <%@page import="com.pet.ft.model.BusinessDao"%>
 <%@page import="com.pet.ft.model.BusinessDaoImpl"%>
 <%@page import="com.pet.ft.dto.BusinessDto"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.pet.ft.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
@@ -88,8 +90,8 @@
   }
 
 #bookbutton:hover {
-  background-color: #2EE59D;
-  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  background-color: salmon;
+  box-shadow: 0px 15px 20px rgba(251, 194, 173, 0.4);
   color: #fff;
   transform: translateX(+5px);
 }
@@ -101,13 +103,34 @@
 	top:-90px;
 	right: -335px;
 }
-
+.foodMap{
+	text-align:center;
+}
+.food_map{
+			margin: 8px; 
+		padding: 2px;
+		border:none;
+		font-size:16px;
+		width:200px;
+		background-color:salmon;
+		color:wheat;
+		cursor:pointer;
+		border-radius:10px;	
+	
+}
 
 </style>
 </head>
 <body>
  <%@include file="../main/header.jsp"%>
-	
+	<%
+HashMap<String, Integer> map= (HashMap<String, Integer>)request.getAttribute("map");
+MemberDto dto = (MemberDto)request.getAttribute("dto");
+%>
+ 
+	<div class="foodMap">
+		<input class="food_map" type="button" value="등록된 가게 보기" onclick="foodMapPop();"/>
+	</div>
 		<div class="foodlist">
 			<section>
 				<c:choose>
@@ -163,6 +186,16 @@
 			<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
 			<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
 		</jsp:include>
+
+	<script type="text/javascript">
+
+		function foodMapPop(){
+			var popup = window.open('./food/food_map.jsp', '등록된 가게 지도', 'width=700px,height=600px,scrollbars=yes');
+		}
+		
+		
+	
+	</script>
 
 
 </body>

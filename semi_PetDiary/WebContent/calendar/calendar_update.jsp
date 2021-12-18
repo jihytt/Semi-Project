@@ -14,9 +14,9 @@
 	
 	#top { text-align : center; color : #4D3417; padding-bottom : 50px; font-size: 25px; font-weight: 700; text-align: center; }
 	
-	#wrap1 { position : absolute; background-color: white; border: 1px solid wheat; border-radius: 20px; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 620px; height: 470px; }
+	#wrap1 { position : absolute; background-color: white; border: 1px solid wheat; border-radius: 20px; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 610px; height: 430px; }
 	
-	#wrap2 { position : absolute;  top: 50%; left: 50%; transform :translate(-50%, -50%); padding: 30px; width: 620px; }
+	#wrap2 { position : absolute;  top: 50%; left: 50%; transform :translate(-50%, -50%); padding: 30px; width: 610px; }
 	
 	table { margin: auto; border-spacing: 10px; }
 	
@@ -100,6 +100,7 @@
 					</td>
 				</tr>
 			</table>
+			<br/>
 			<div id="btn">
 				<input type="submit" value="완료"/>
 				<input type="button" value="취소" onclick="history.back();" />

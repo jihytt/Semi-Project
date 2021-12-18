@@ -15,7 +15,7 @@
 </script>
 
 <body>
-	<form action="https://localhost:3000/" method="post">
+	<form action="https://152.70.250.165:3000/" method="post">
   		<input type="hidden" value="OpenRTC" name="command">
   		<input type="hidden" value="<%=(int)request.getAttribute("member") %>" name="member">
   		<input type="hidden" value="<%= (int)request.getAttribute("business") %>" name="business">

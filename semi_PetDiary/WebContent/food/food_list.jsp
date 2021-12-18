@@ -38,12 +38,35 @@
 		height: 150px;
 	}
 
+ <%--식당지도--%>
+.food_search .food_map{
+		margin:10px;
+		padding: 2px;
+		font-size:16px;
+		width:200px;
+		border:none;
+		background-color:wheat;
+		color:salmon;
+		cursor:pointer;
+		border-radius:10px;	
+		
+	}
+.food_search{
+	text-align:center;
+}
 
 </style>
 </head>
 <body>
  <%@include file="../main/header.jsp"%>
  <%List<BusinessDto> list = (List<BusinessDto>)request.getAttribute("list"); %>
+ 
+ 
+ 		<%--식당지도 --%>
+ 		<div class="food_search">
+			<input class="food_map" type="button" value="지도상에서 가게보기" onclick="mapPop();"/>
+		</div>
+ 
  
 <%
 		for(BusinessDto bdto : list){
@@ -80,6 +103,18 @@
 				<jsp:param name="nextPageNo" value="${paging.nextPageNo }"/>
 				<jsp:param name="finalPageNo" value="${paging.finalPageNo }"/>
 			</jsp:include>
+
+		<%--식당지도 --%>
+	<script type="text/javascript">
+		function mapPop(){
+			var popup = window.open('./food/food_map.jsp', '지도', 'width=700px,height=800px,scrollbars=yes');
+		}
+		
+	
+	</script>
+
+
+
 
 
 </body>

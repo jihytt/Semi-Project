@@ -66,11 +66,11 @@ public class PagingServlet extends HttpServlet {
 				request.setAttribute("paging", paging);
 				request.setAttribute("servletPath", "paging.do");
 				
-				url = "business/memberlist_main.jsp";
+				url = "admin/admin_member.jsp";
 			} else {
 				request.setAttribute("msg", "Error가 발생했습니다.");
 				
-				url = "business/business_main.jsp";
+				url = "admin/admin_member.jsp";
 			}
 			
 			request.getRequestDispatcher(url).forward(request, response);
@@ -98,12 +98,12 @@ public class PagingServlet extends HttpServlet {
 				request.setAttribute("paging", paging);
 				request.setAttribute("servletPath", "paging.do");
 				
-				url = "business/reportlist_main.jsp";
+				url = "admin/admin_report.jsp";
 			} else {
 				
 				request.setAttribute("msg", "Error가 발생했습니다.");
 				
-				url = "business/reportlist_main.jsp";
+				url = "admin/admin_report.jsp";
 			}
 			
 			request.getRequestDispatcher(url).forward(request, response);
@@ -179,7 +179,7 @@ public class PagingServlet extends HttpServlet {
 			
 			request.getRequestDispatcher(url).forward(request, response);
 		}
-		if("foodlist".equals(command)) {//========================================
+		if("foodlist".equals(command)) {
 			
 			List<BusinessDto> list1 = biz.menu();
 			request.setAttribute("list1", list1);
@@ -199,7 +199,6 @@ public class PagingServlet extends HttpServlet {
 			System.out.println("offset : " +offset);
 			System.out.println("리스트 : "+list1);
 			
-//			list = new ArrayList<BusinessDto>(offset, paging.getRecordsPerPage() * currentPageNo);
 			List<BusinessDto> list = biz.BusinessList(offset, paging.getRecordsPerPage() * currentPageNo);
 			
 			paging.setNumberOfRecords(biz.businessTotal());

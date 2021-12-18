@@ -10,7 +10,6 @@
 <head>
     <title>Title</title>
     <style type="text/css">
-
         table {
             border: none;
             border-collapse: collapse;
@@ -29,19 +28,20 @@
         }
     </style>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../resources/javascript/script.js"></script>
+    <script src="/semi_PetDiary/resources/javascript/script.js"></script>
 </head>
 <body>
 <%
     String src = request.getParameter("src");
     PetDto dto = (PetDto) request.getAttribute("dto");
+    int pet_no = dto.getPet_no();
     if (src == null) {
         src = dto.getPet_path();
     }
 %>
-<form method="post" action="../pet_servlet">
+<form method="post" action="/semi_PetDiary/pet_servlet">
     <input type="hidden" name="command" value="pet_update_res">
-    <input type="hidden" name="pet_no" value="<%=dto.getPet_no()%>">
+    <input type="hidden" name="pet_no" value="<%=pet_no%>">
     <table border="1">
         <col width="100"/>
         <col width="100"/>
@@ -50,7 +50,7 @@
         <tr>
             <td colspan="3">
                 <!--<input type="button" name="picture" value="사진 선택하기" onclick="location.href='../pet_servlet?command=picture_update_select'">-->
-                <a href="../pet_servlet?command=picture_update_select">
+                <a href="/semi_PetDiary/pet.do?command=picture_update_select&pet_no=<%=pet_no%>">
                 <img id="selectedPic" src="<%=src%>" alt="선택된 사진" width="500" height="500">
                 </a>
                 <input type="hidden" name="path" value="<%=src%>">

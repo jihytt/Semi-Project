@@ -1,8 +1,13 @@
 $(function () {
     $(".smallPic").click(function () {
         var path =  $(this).attr("src");
-        $("#bigPic").html("<img style='height: 400px' src=\"" + path + "\">");
-        $(this).css("border", "2px solid black");
+        $("#selectedPic").attr("src" , path).attr("hidden", false);
+    });
+});
+
+$(function () {
+    $("#uVaccin").on("input", function () {
+        $("#uPet").attr("disabled", false);
     });
 });
 
@@ -23,21 +28,20 @@ $(function () {
         $("#iPet").attr("disabled", false);
     }
 });
-
 $(function () {
     $(".iselectPic").on("click", function () {
         var src = this.getAttribute("src");
-        location.href = "pet/pet_insert.jsp?src=" + src;
+        location.href = "/semi_PetDiary/pet_servlet?command=iSelPic&src=" + encodeURIComponent(src);
     });
 });
 
 $(function () {
     $(".uselectPic").on("click", function () {
-        var src = this.getAttribute("src")
-        location.href = "pet/pet_update.jsp?src=" + src;
+        var pet_no = this.getAttribute("alt");
+        var src = this.getAttribute("src");
+        location.href = "/semi_PetDiary/pet_servlet?command=uSelPic&src=" + encodeURIComponent(src) + "&pet_no=" + pet_no;
     });
 });
-
 function petCheck() {
     if (frm.name.value === "") {
         alert("이름을 입력해주세요");
@@ -58,3 +62,4 @@ function petCheck() {
         return false;
     }
 }
+

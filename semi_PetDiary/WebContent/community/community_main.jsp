@@ -13,7 +13,6 @@
 <title>Insert title here</title>
 <link href="/semi_PetDiary/resources/css/stylesheet.css" rel="stylesheet">
 <style type="text/css">
-
 .community_row{
 	display: flow-root;
 	position: relative;
@@ -168,7 +167,7 @@ outline-color: salmon;
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="padding-top : 90px;">
 <%@include file="/main/header.jsp"%>
 
 <%List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("list");
@@ -230,7 +229,8 @@ outline-color: salmon;
 		<div id="pagaing">
 			<ul class="pagination">
 			<%
-			for(int i =0; i<(int)request.getAttribute("maxpage")/8+1;i++){
+			for(int i =0; i<=(int)request.getAttribute("maxpage")/8;i++){
+
 				if(i+1==paging){
 			%>
 				<li class="active"><a style="background-color: salmon;border-color: salmon;"  href='/semi_PetDiary/pet.do?command=community&paging=<%=(i+1)%>'><%=i+1 %></a></li>

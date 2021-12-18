@@ -61,7 +61,7 @@
 	    function sendMessage(message) {
 	        var data = {
 	            "senderName"    : " ",
-	            "message"        : message
+	            "message"       : message
 	        };
 	        
 	        request(data);
@@ -71,8 +71,14 @@
 	        	url: "../chatbot.do?command=dialog&message="+encodeURIComponent(message),
 	        	dataType: "json",
 	        	success : function(data){
-	        		response(data);
-	        		
+	        		if (data.message!="감사합니다. 대화를 종료합니다."){
+	        			response(data);
+	        		} else {
+	        			response(data);
+	        			setTimeout(function() {
+	        				window.close();
+	        			}, 800);
+	        		}
 	        	}
 	        	,
 	        	error : function(){

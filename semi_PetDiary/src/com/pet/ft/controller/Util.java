@@ -28,16 +28,9 @@ public class Util {
 
     public static void deleteFile(String path) {
 
-
         File file = new File(path);
         if (file.exists()) {
-            System.out.println("파일 존재");
-        } else if (file.isDirectory()){
-            System.out.println("2");
-        } else if (file.isFile()) {
-            System.out.println("3");
-        } else {
-            System.out.println("접자");
+            file.delete();
         }
     }
 

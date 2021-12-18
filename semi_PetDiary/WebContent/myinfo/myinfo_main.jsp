@@ -9,6 +9,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript">
+
+function PopUpSubmit() {
+	var openNewWindow = window.open('', 'picture', 'width=1200, height=840 location = no');
+
+	openNewWindow.location.href = "/semi_PetDiary/pet.do?command=picture_main";
+	
+	}
+
+</script>
+
 <style type="text/css">
 
 .title {
@@ -37,14 +49,10 @@
 
 }
 
-.myinfo_content:active{
-background-color: #bbb;
-}
-
 
 .container{
 	width: 1047px;
-    height: 954px;
+    height: 754px;
     margin: 0 auto;
 }
 
@@ -117,24 +125,29 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 		<div class="myinfo_content">
 				<div class="title"><b>내 다이어리</b></div>
 				<div class="content"><b>내 반려 동물 수</b>   <span class="content_in"><%=map.get("CountMyinfoPet") %></span></div>
+				<div class="content"><b>내 사진 첩</b>   <span class="content_in"><%=map.get("CountPicture") %></span></div>
+				<input class="myinfo_button" type="button" id = "picture"value="사진 조회" onclick="PopUpSubmit()">
+				
 				<br/>
 				<div class="content"><b> 내가 세운 여행 계획</b>   <span class="content_in"><%=map.get("CountMyinfoCalendar") %></span></div>
+				<input class="myinfo_button" type="button" value="여행계획 보기" onclick="location.href='/semi_PetDiary/pet.do?command=travelmain'">
+		
+		
 		</div>
-		<div class="myinfo_content" onclick="location.href='/semi_PetDiary/pet.do?command=MyCommunityList'">
+		<div class="myinfo_content" >
 				<div class="title"><b>내 게시글</b></div>
 				<div class="content"><b>내가 쓴 글</b>   <span class="content_in"><%=map.get("CountMyinfoCommunity")%></span></div>
 				<br/>
 				<div class="content"><b>내가 쓴 댓글</b>   <span class="content_in"><%=map.get("CountMyinfoComment") %></span></div>
+				<input class="myinfo_button" type="button" value="게시글 조회" onclick="location.href='/semi_PetDiary/pet.do?command=MyCommunityList'">
+				
 		</div>
-		<div class="myinfo_content">
+		<div class="myinfo_content" >
 				<div class="title"><b>내 예약현황 및 결제내역</b>   </div>
 				<div class="content"><b>내 예약현황</b>   <span class="content_in"><%=map.get("CountMyinfoBook") %></span></div>
 				<br/>				
 				<div class="content"><b>내 결제내역</b>   <span class="content_in"><%=map.get("CountMyinfoOrder") %></span></div>
-		</div>
-		
-		<div class="myinfo_content" onclick="location.href='#'">
-				<div class="title"><b>내 사진첩</b>   </div>
+				<input class="myinfo_button" type="button" value="예약 조회"onclick="location.href='/semi_PetDiary/paging.do?command=book'">
 				
 		</div>
 		

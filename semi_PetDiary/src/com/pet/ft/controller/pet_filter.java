@@ -43,7 +43,7 @@ public class pet_filter {
 		
 		for(String word :badW1) {
 			while(string.indexOf(word)>=0) {
-				string = string.replace(word, "%%");	
+				string = string.replace(word, "**");	
 				count++;
 			}		
 		}
@@ -52,7 +52,7 @@ public class pet_filter {
 	        String string2 =string.replaceAll(match, "");
 			for(String word :badW1) {
 				while(string2.indexOf(word)>=0) {
-					string2 = string2.replace(word, "@@");
+					string2 = string2.replace(word, "**");
 					count++;
 				}		
 			}
@@ -86,7 +86,7 @@ public class pet_filter {
 												space++;
 											}					
 												
-											string = string.substring(0, place+space)+"#"+string.substring(place+space+K.length(), string.length());
+											string = string.substring(0, place+space)+"*"+string.substring(place+space+K.length(), string.length());
 											count++;
 										}
 										
@@ -138,7 +138,7 @@ public class pet_filter {
 											space++;
 
 										}			
-										string = string.substring(0, place+space)+"$"+string.substring(place+space+K.length(), string.length());
+										string = string.substring(0, place+space)+"*"+string.substring(place+space+K.length(), string.length());
 										count++;
 									}
 								}

@@ -18,7 +18,7 @@ public class BookDto {
 	private BusinessDto businessVO;
 	
 	public BookDto() {
-		
+
 	}
 
 

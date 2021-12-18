@@ -21,7 +21,7 @@
 </head>
 <style type="text/css">
 	h2{width:200px; margin: 10px auto;}
-	#table {display: table; width: 60%; margin: 20px auto;}
+	#table {display: table; width: 60%; margin: 20px auto; margin-bottom: 10%}
 	.row {display: table-row;}
 	.main{background-color: salmon; color:white; text-align: center;}
 	.cell {display: table-cell; padding: 3px; border: 0.5px solid #DDD; text-align: center;}
@@ -55,26 +55,25 @@ SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd"); //원하
 				<span class="cell col1">게시글 번호</span>
 				<span class="cell col2">제목</span>
 				<span class="cell col3">작성일자</span>
-				<span class="cell col4">신고처리여부</span>
-				<span class="cell col5">신고횟수</span>
-				<span class="cell col6">조회수</span>
-				<span class="cell col7">좋아요수</span>
-				<span class="cell col8">댓글수</span>
+				<span class="cell col4">신고횟수</span>
+				<span class="cell col5">조회수</span>
+				<span class="cell col6">좋아요수</span>
+				<span class="cell col7">댓글수</span>
 			</div>
 		
 	
 		<%for(CommunityDto dto : list){ %>	
-				
+				<%if(dto.getCommunity_report().equals("N")){%>
 				<div class="row" onclick="location.href='pet.do?command=community_detail&seq=<%=dto.getCommunity_seq()%>&community_no=<%=dto.getCommunity_no()%>'">
 					<span class="cell col1"><%=dto.getCommunity_seq() %></span>
 					<span class="cell col2"><%=dto.getCommunity_title() %></span>
 					<span class="cell col3"><%=simpleDateFormat.format(dto.getCommunity_regdate()) %></span>
-					<span class="cell col4"><%=dto.getCommunity_report() %></span>
-					<span class="cell col5"><%=dto.getCommunity_reportcount() %></span>
-					<span class="cell col6"><%=dto.getCommunity_views() %></span>
-					<span class="cell col7"><%=pet_util.LikesCount(dto.getCommunity_seq()) %></span>
-					<span class="cell col8"><%=pet_util.CommunityCommentCount(dto.getCommunity_seq()) %></span>
+					<span class="cell col4"><%=dto.getCommunity_reportcount() %></span>
+					<span class="cell col5"><%=dto.getCommunity_views() %></span>
+					<span class="cell col6"><%=pet_util.LikesCount(dto.getCommunity_seq()) %></span>
+					<span class="cell col7"><%=pet_util.CommunityCommentCount(dto.getCommunity_seq()) %></span>
 				</div>		
+				<%} %>
 		<%} %>
 		</div>
 	

@@ -50,31 +50,33 @@ response.setContentType("text/html; charset=UTF-8");
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript">
 
-window.onload = function(){
-
-	var view = document.getElementsByName('view');
+	window.onload = function(){
 	
-	for (var i = 0; view.length; i++){
-		var color = "#";
-		var letters = ['ffffb3', 'FEC2C2', 'D8ECB5', 'BEED67', 'C8ECFC', 'BCACFD', 'FFD2BC', 'FFA5BD', 'FCE6AF', 'B7F9F4', 'DECDFE', 'BA9DF4'];
-		color += letters[Math.floor(Math.random() * letters.length)];
-		view[i].style.background = color;
-	}
-}
-
-function calendar_list(year, month, d, member_no) {
-	var year = year;
-	var month = month;
-	var date = d;
-	var member_no = member_no;
-	
-	var popupWidth = 670;
-	var popupHeight = 520;
-	var popupX = (window.screen.width / 2) - (popupWidth / 2);
-	var popupY= (window.screen.height / 2) - (popupHeight / 2);
+		var view = document.getElementsByName('view');
 		
-	open("/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no, "", 'height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY + 'resizable=no');
-}
+		// 달력에 표시되는 일정 제목을 랜덤 색상으로 배정
+		for (var i = 0; view.length; i++){
+			var color = "#";
+			var letters = ['ffffb3', 'FEC2C2', 'D8ECB5', 'BEED67', 'C8ECFC', 'BCACFD', 'FFD2BC', 'FFA5BD', 'FCE6AF', 'B7F9F4', 'DECDFE', 'BA9DF4'];
+			color += letters[Math.floor(Math.random() * letters.length)];
+			view[i].style.background = color;
+		}
+	}
+	
+	// 달력 위의 일정 제목 클릭 시 팝업창 OPEN
+	function calendar_list(year, month, d, member_no) {
+		var year = year;
+		var month = month;
+		var date = d;
+		var member_no = member_no;
+		
+		var popupWidth = 670;
+		var popupHeight = 520;
+		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+		var popupY= (window.screen.height / 2) - (popupHeight / 2);
+			
+		open("/semi_PetDiary/pet.do?command=calendar_list&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no, "", 'height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY + 'resizable=no');
+	}
 
 </script>
 </head>
@@ -82,9 +84,12 @@ function calendar_list(year, month, d, member_no) {
 
 <%
 
-	pet_util util = new pet_util();
 	PetDao dao = new PetDaoImpl();
-	Calendar cal = Calendar.getInstance();
+
+	Calendar cal = Calendar.getInstance();; // 표준시간대를 이용해서 달력을 가져온다.
+	// singleton : 객체를 단 한번만 생성
+	
+	// 연도, 월 설정
 	int year = cal.get(Calendar.YEAR);
 	int month = cal.get(Calendar.MONTH) +1;
 	
@@ -100,50 +105,60 @@ function calendar_list(year, month, d, member_no) {
 		month = Integer.parseInt(paramMonth);
 	}
 	
+	// 달이 12보다 커지면 연도 증가, 월은 1월로
 	if (month > 12){
 		year++;
 		month = 1;
 	}
 	
+	// 달이 1보다 작아지면 연도 감소, 월은 12월로
 	if (month < 1){
 		year--;
 		month = 12;
 	}
 	
+	// year년 month월 1일로 Calendar 객체 설정
 	cal.set(year,month-1,1);
-	int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-	int lastDay = cal.getActualMaximum(Calendar.DATE);
+	
+	int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK); // 1일의 요일
+	int lastDay = cal.getActualMaximum(Calendar.DATE);  // 마지막 날
+	
+	String yyyyMM = year + pet_util.isTwo(String.valueOf(month));
+	
 	int member_no = (int) session.getAttribute("member_no");
-	String yyyyMM = year + util.isTwo(String.valueOf(month));
+
+	// 회원의 해당 월의 일정 list를 불러옴
 	List<CalendarDto> list = dao.CalViewList(member_no, yyyyMM);
 %>
 	<div id = "wrap">
 		<div id= "sform">
+			<!-- 연월 선택 시 해당 달력으로 이동 -->
 			<form method="post" action="/semi_PetDiary/calendar/calendar_main.jsp">
 			<i class="far fa-calendar-alt"></i>
-			<select name="year">
+				<select name="year">
 <%			
-				for (int i = year-3; i <= year+3; i++){ //
+					for (int i = year-3; i <= year+3; i++){
 %>
-				<option value="<%=i %>" <%=(year==i)? "selected":"" %> ><%=i %></option>
+					<option value="<%=i %>" <%=(year==i)? "selected":"" %> ><%=i %></option>
 <%
-				}
+					}
 %>					
-				</select>년
-				<select name="month">
+					</select>년
+					<select name="month">
 <%
-				for (int i = 1; i < 13; i++) {
+					for (int i = 1; i < 13; i++) {
 %>						
-				<option value="<%=i %>" <%=(month==i)? "selected": "" %> ><%=i %></option>
+					<option value="<%=i %>" <%=(month==i)? "selected": "" %> ><%=i %></option>
 <%
-				}
+					}
 %>
-			</select>월
+				</select>월
 				<input type="submit" value="보기"/>
 			</form>
 		</div>
 		<br/>
 		<table id = "calendar">
+			<!-- 아이콘 클릭 시 해당 달력으로 이동 -->
 			<caption>
 				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year-1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-left"></i></a>
 				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year%>&month=<%=month-1%>" style="color:salmon"><i class="fas fa-angle-left"></i></a>
@@ -151,18 +166,22 @@ function calendar_list(year, month, d, member_no) {
 				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year%>&month=<%=month+1%>" style="color:salmon"><i class="fas fa-angle-right"></i></a>
 				<a href="/semi_PetDiary/calendar/calendar_main.jsp?year=<%=year+1%>&month=<%=month%>" style="color:#FFB2A9"><i class="fas fa-angle-double-right"></i></a>
 			</caption>
+			
+			<!-- 달력 날짜 표시 -->
 			<tr id="day">
 				<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
 			</tr>
 			<tr>			
 <%
 		int count = 0;
+
+		// 1일 전까지 공백칸 채우기
 		for (int i = 0; i < dayOfWeek-1; i++) {
 			out.print("<td></td>");
 			count++;
 		}
-			
-		for(int d=1; d<=lastDay; d++) {
+		
+		for(int d = 1; d <= lastDay; d++) {
 			count++;
 			
 			String color="black";
@@ -173,20 +192,25 @@ function calendar_list(year, month, d, member_no) {
 			}
 %>				
 			<td id="dates">
-				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calInsert&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastDay=<%=lastDay %>'"><%=d%></a>
+				<!-- 날짜 클릭 시 일정 등록 창으로 이동 -->
+				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_insertform&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastDay=<%=lastDay %>'"><%=d%></a>
 				<div>
-				<a id="calendar_list" style="cursor: pointer; color: black" href="javascript:calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=member_no%>')">			
-					<%=util.getCalView(d, list)%>
+				<!-- 해당 날짜에 등록된 일정이 있으면 달력에 출력 -->
+				<a id="calendar_list" style="cursor: pointer; color: black" href="calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=member_no%>')">			
+					<%=pet_util.getCalView(d, list)%>
 				</a>
 				</div>	
 			</td>
 	
 <%
+
 		if(count == 7) {
 			out.print("</tr><tr>");
 			count = 0;
 			}
-		}		
+		}	
+		
+		// 마지막 날짜 이후 공백칸 채우기
 		for (int i = 0; i < (7-(dayOfWeek-1 + lastDay)%7)%7; i++){
 			out.print("<td></td>");
 		}	

@@ -37,7 +37,7 @@ import java.io.PrintWriter;
 
 
 
-@WebServlet("/login_do")
+@WebServlet("/login_servlet")
 public class login_servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -566,7 +566,7 @@ public class login_servlet extends HttpServlet {
 		}
 			
 		
-		// 비밀번호 찾기(임시 비밀번호로 변경)
+		// 비밀번호 찾기(임시 비밀번호로 변경)  
 		if ("login_findPw".equals(command)) {
 			String member_name = request.getParameter("member_name");
 			String member_email = request.getParameter("member_email");

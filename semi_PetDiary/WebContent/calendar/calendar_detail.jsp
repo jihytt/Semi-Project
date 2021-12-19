@@ -91,7 +91,7 @@
 			</table>
 			<br/>
 			<div id="btn">
-				<input type="button" value="수정" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calUpdate&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=${member_no }'"/>
+				<input type="button" value="수정" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_updateform&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=${member_no }'"/>
 				<input type="button" value="뒤로가기" onclick="history.back();" />
 			</div>
 		</div>

@@ -158,7 +158,7 @@ else {
             </table>
           </div>
         <div class="pet_info">
-            <iframe src="/semi_PetDiary/pet.do?command=calendar_calMain" class="iframe" >
+            <iframe src="/semi_PetDiary/pet.do?command=calendar_main" class="iframe" >
             </iframe>
         </div>
     </div>

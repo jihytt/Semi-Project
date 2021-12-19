@@ -33,7 +33,7 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
 	function registForm(){
-		location.href="/semi_PetDiary/pet.do?command=login_signup";
+		location.href="/semi_PetDiary/login.do?command=login_signup";
 	}
 	
 	function checkForm(){
@@ -58,7 +58,7 @@
 <div id="wrap">
 	<div id="top"><i class="fas fa-paw"></i>&nbsp;<span>Pet Diary</span></div>
 	<div id="login">
-		<form action="/semi_PetDiary/pet.do" method="post" onsubmit="return checkForm()">
+		<form action="/semi_PetDiary/login.do" method="post" onsubmit="return checkForm()">
 			<input type="hidden" name="command" value="login_loginForm"/>
 				<i class="fas fa-angle-down"></i>
 				<div id="select_login" style="display:inline-block">일반 로그인</div>
@@ -79,27 +79,30 @@
 			<i class="fas fa-angle-down"></i>
 			<span>간편 로그인</span>
 		</div>
+		
+		<!-- 네이버 로그인 -->
 		<div id="naverLogin">
 <%
-	    String clientId = "n8OVzf4XjGNAd8jAA6Hi";//애플리케이션 클라이언트 아이디값";
-	    String redirectURI = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
-	    SecureRandom random = new SecureRandom();
-	    String state = new BigInteger(130, random).toString();
-	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-	    apiURL += "&client_id=" + clientId;
-	    apiURL += "&redirect_uri=" + redirectURI;
-	    apiURL += "&state=" + state;
-	    session.setAttribute("state", state);
+		    String clientId = "n8OVzf4XjGNAd8jAA6Hi";//애플리케이션 클라이언트 아이디값";
+		    String redirectURI = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
+		    SecureRandom random = new SecureRandom();
+		    String state = new BigInteger(130, random).toString();
+		    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+		    apiURL += "&client_id=" + clientId;
+		    apiURL += "&redirect_uri=" + redirectURI;
+		    apiURL += "&state=" + state;
+		    session.setAttribute("state", state);
 %>
 	  		<a href="<%=apiURL%>"><img width="270px" src="${pageContext.request.contextPath}/resources/image/naverlogo.png"/></a>			
 		</div>
 		
+		<!-- 카카오 로그인 -->
 		<div id="kakaoLogin">
 <%
-		String client_id = "39cbfc25bdd943573118565016e1297d";
-		String redirect_uri = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=kakao_login", "UTF-8");
-		String prompt = "login";
-		String kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&response_type=code&" + "&state=" + state + "&prompt=" + prompt;
+			String client_id = "39cbfc25bdd943573118565016e1297d";
+			String redirect_uri = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=kakao_login", "UTF-8");
+			String prompt = "login";
+			String kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&response_type=code&" + "&state=" + state + "&prompt=" + prompt;
 %>
 			<a href="<%=kakao_apiURL %>" id="kakao-login-btn">
 	    <img src="${pageContext.request.contextPath}/resources/image/kakaologo.png" width="270px;"/>

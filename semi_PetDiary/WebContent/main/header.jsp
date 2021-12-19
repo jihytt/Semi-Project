@@ -67,14 +67,14 @@ request.setCharacterEncoding("UTF-8"); response.setCharacterEncoding("UTF-8");
       <ul class="header_login">
         <% if(session.getAttribute("member_no") == null) { %>
 
-        <li><a href="/semi_PetDiary/pet.do?command=login_login">로그인</a></li>
+        <li><a href="/semi_PetDiary/login.do?command=login_login">로그인</a></li>
         <li>
-          <a href="/semi_PetDiary/pet.do?command=login_signup">회원가입</a>
+          <a href="/semi_PetDiary/login.do?command=login_signup">회원가입</a>
         </li>
 
         <% } else { %>
         <li>
-          <a href="/semi_PetDiary/pet.do?command=login_logout">로그아웃</a>
+          <a href="/semi_PetDiary/login.do?command=login_logout">로그아웃</a>
         </li>
         <% } %>
       </ul>

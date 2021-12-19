@@ -76,7 +76,7 @@
 			<br/>
 			<c:forEach items="${list }" var="dto">
 				<div id="list">
-					<div id="title" style="width:140px"><a href="/semi_PetDiary/pet.do?command=calendar_calDetail&&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }"><i class="fas fa-pen" style="color:#91dc85"></i>&nbsp;&nbsp;${dto.calendar_title }</a></div>
+					<div id="title" style="width:140px"><a href="/semi_PetDiary/pet.do?command=calendar_detail&&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }"><i class="fas fa-pen" style="color:#91dc85"></i>&nbsp;&nbsp;${dto.calendar_title }</a></div>
 					<div id="date" style="width:180px">
 					<%=month %>월 <%=date %>일
 						<c:out value="${fn:substring(dto.calendar_startdate, 8, 10)} :"/>
@@ -88,7 +88,7 @@
 						<c:out value="${fn:substring(dto.calendar_enddate, 10, 12)}"/>
 					</div>
 					<div id="delete" style="width: 20px">
-						<input type="button" value="삭제" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_calDelete&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=<%=member_no%>'"/>
+						<input type="button" value="삭제" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_delete&calendar_no=${dto.calendar_no }&year=${year }&month=${month }&date=${date }&member_no=<%=member_no%>'"/>
 					</div>
 				</div>
 				<br/>

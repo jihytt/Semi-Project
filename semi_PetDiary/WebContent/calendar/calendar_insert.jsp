@@ -57,7 +57,7 @@
 %>
 	<div id="wrap">
 	<form id="insert" action="/semi_PetDiary/pet.do" method="post">
-		<input type="hidden" name="command" value="calendar_insert"/>
+		<input type="hidden" name="command" value="calendar_insertres"/>
 		<input type="hidden" name="member_no" value="<%=member_no%>"/>
 		<div id="head"><i class="far fa-calendar-plus" style="color : salmon"></i>&nbsp;일정 등록하기</div>
 			<input type="text" name="calendar_title" placeholder=" 일정 제목을 입력해 주세요. " required="required"/>

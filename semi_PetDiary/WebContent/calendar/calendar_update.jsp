@@ -56,7 +56,7 @@
 		<form id="update" action="/semi_PetDiary/pet.do" method="post">
 			<div id="date"><i class="fas fa-edit" style="color: #91dc85"></i>&nbsp;&nbsp;<%=year %>년 <%=month %>월 <%=date %>일</div>
 			<br/>
-			<input type="hidden" name="command" value="calendar_calUpdateform"/>
+			<input type="hidden" name="command" value="calendar_updateres"/>
 			<input type="hidden" name="calendar_no" value="${dto.calendar_no }"/>
 			<input type="hidden" name="member_no" value="${dto.member_no }"/>
 			<input type="hidden" name="year" value="<%=year %>"/>

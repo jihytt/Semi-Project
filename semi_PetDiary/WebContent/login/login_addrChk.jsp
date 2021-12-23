@@ -18,7 +18,6 @@
 
 function init(){
 	var url = location.href;
-	// !!! 프로젝트에 올릴 때 변경 !!!
 	var confmKey = "U01TX0FVVEgyMDIxMDUwODIyNDkwNDExMTE0MDc=";
 	var resultType = "4"; 
 	var inputYn= "<%=inputYn%>";

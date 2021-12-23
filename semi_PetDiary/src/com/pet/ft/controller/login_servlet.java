@@ -27,6 +27,7 @@ import com.pet.ft.model.PetDao;
 import com.pet.ft.model.PetDaoImpl;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.Random;
 import java.net.URL;
@@ -82,18 +83,10 @@ public class login_servlet extends HttpServlet {
     			session.setAttribute("member_no", dto.getMember_no());
     			session.setMaxInactiveInterval(3600);
 
-    			if (dto.getMember_role().equals("ADMIN")) {
-    				response.sendRedirect("main/main.jsp");
-    			} else if (dto.getMember_role().equals("USER")) {
-    				response.sendRedirect("main/main.jsp");
-    			} else if (dto.getMember_role().equals("EMPLOYEE")) {
-    				response.sendRedirect("main/main.jsp");
-
-    			}
+    			response.sendRedirect("main/main.jsp");	
     		} else {
     			jsResponse(response, "가입하지 않은 아이디거나, 잘못된 비밀번호입니다.", loginDirectory+"login.jsp");
-    		}
-    			
+    		}	
     	} 
     	
 		
@@ -122,8 +115,9 @@ public class login_servlet extends HttpServlet {
 			if (dto != null) {
 				idnotused = false;
 			}
-	        JSONObject obj = new JSONObject();
-            obj.put("idnotused", idnotused);
+		    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		    hashMap.put("idnotused", idnotused);
+		    JSONObject obj = new JSONObject(hashMap);
             
             response.getWriter().print(obj);
 		}
@@ -135,11 +129,13 @@ public class login_servlet extends HttpServlet {
 			String member_email = request.getParameter("member_email");
 			dto = dao.SignUpEmailChk(member_email);
 			
-			boolean emailnotused = true;
+			boolean emailnotused;
 			
 			if(dto == null){
+				
+				emailnotused = true;
 	
-				String from = "semiproject.pet@gmail.com";
+				String from = "이메일 주소";
 				String fromName = "관리자";
 				String to = request.getParameter("member_email");
 	
@@ -181,7 +177,7 @@ public class login_servlet extends HttpServlet {
 				Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 	
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(from,"testpet03");
+						return new PasswordAuthentication(from,"비밀번호");
 						}
 				});
 				
@@ -218,8 +214,9 @@ public class login_servlet extends HttpServlet {
 				HttpSession saveKey = request.getSession();
 				saveKey.setAttribute("AuthenticationKey", AuthenticationKey);
 	
-		        JSONObject obj = new JSONObject();
-	            obj.put("emailnotused", emailnotused);
+				HashMap<String, Object> hashMap = new HashMap<>();
+				hashMap.put("emailnotused", emailnotused);		
+		        JSONObject obj = new JSONObject(hashMap);
 	            
 	            response.getWriter().print(obj);
 				
@@ -227,8 +224,9 @@ public class login_servlet extends HttpServlet {
 				// 중복된 이메일이 있을 때
 				emailnotused = false;
 				
-		        JSONObject obj = new JSONObject();
-	            obj.put("emailnotused", emailnotused);
+				HashMap<String, Object> hashMap = new HashMap<>();
+				hashMap.put("emailnotused", emailnotused);		
+		        JSONObject obj = new JSONObject(hashMap);
 	            
 	            response.getWriter().print(obj);
 				
@@ -243,20 +241,20 @@ public class login_servlet extends HttpServlet {
 			String memberemailauth = request.getParameter("member_email_auth");
 
 			if(AuthenticationKey.equals(memberemailauth)){
-		        JSONObject obj = new JSONObject();
-	            obj.put("result", true);
+		        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("result", true);
+				JSONObject obj = new JSONObject(hashMap);
 	            
 	            response.getWriter().print(obj);
-				//request.setAttribute("AuthenticationKey", AuthenticationKey);
-				//request.setAttribute("memberemailauth", memberemailauth);
-				//dispatch(request, response, loginDirectory+"emailAuth.jsp");
 			} else {
-		        JSONObject obj = new JSONObject();
-	            obj.put("result",false);
+		        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("result", false);
+				JSONObject obj = new JSONObject(hashMap);
 	            
 	            response.getWriter().print(obj);
-				//response.sendRedirect(loginDirectory+"failedAuth.jsp");
 			}
+			// 특정 세션(인증번호) 삭제
+			request.getSession().removeAttribute("AuthenticationKey");
 		}
 		
 		// 회원가입 insert
@@ -549,18 +547,17 @@ public class login_servlet extends HttpServlet {
 			dto = biz.findId(member_name, member_email);
 			
 			if(dto != null) {
-				//	request.setAttribute("member_id", dto.getMember_id());
-				//	dispatch(request, response, "login/login_findId.jsp");
-				JSONObject obj = new JSONObject();
-				obj.put("member_id", dto.getMember_id());
-		            
+				HashMap<String, Object> hashMap = new HashMap<>();
+				hashMap.put("member_id", dto.getMember_id());
+				JSONObject obj = new JSONObject(hashMap);
+	            
 				response.getWriter().print(obj);
 			} else {
-				JSONObject obj = new JSONObject();
-				obj.put("member_id", "null");
+				HashMap<String, String> hashMap = new HashMap<>();
+				hashMap.put("member_id", "null");
+				JSONObject obj = new JSONObject(hashMap);
 		            
 				response.getWriter().print(obj);
-				//	response.sendRedirect("login/login_failedToFind.jsp");
 			}
 				
 		}
@@ -575,7 +572,7 @@ public class login_servlet extends HttpServlet {
 			
 			if(dto != null){
 				
-				String from = "semiproject.pet@gmail.com";
+				String from = "이메일 주소";
 				String fromName = "관리자";
 				String to = request.getParameter("member_email");
 				
@@ -585,7 +582,6 @@ public class login_servlet extends HttpServlet {
 				props.put("mail.smtp.port", "465");
 				props.put("mail.smtp.starttls.enable", "true");
 				props.put("mail.smtp.auth", "true");
-				props.put("mail.smtp.debug", "true");
 				props.put("mail.smtp.socketFactory.port", "465");
 				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 				props.put("mail.smtp.socketFactory.fallback", "false");
@@ -614,7 +610,7 @@ public class login_servlet extends HttpServlet {
 				
 				Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(from,"testpet03");
+						return new PasswordAuthentication(from,"비밀번호");
 					}
 				});
 							
@@ -657,15 +653,16 @@ public class login_servlet extends HttpServlet {
 					resCheck= false;
 				}
 					
-				
-				JSONObject obj = new JSONObject();
-				obj.put("result", resCheck);
+				HashMap<String, Object> hashMap = new HashMap<>();
+				hashMap.put("result", resCheck);
+				JSONObject obj = new JSONObject(hashMap);
 	                
 				response.getWriter().print(obj);
 
 			} else {
-				JSONObject obj = new JSONObject();
-				obj.put("result", false);
+				HashMap<String, Object> hashMap = new HashMap<>();
+				hashMap.put("result", false);
+				JSONObject obj = new JSONObject(hashMap);
 	                
 				response.getWriter().print(obj);	                
 			}		

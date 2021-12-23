@@ -164,7 +164,7 @@
 	}
 	
 	function jusoCallBack(roadAddrPart1, roadAddrPart2,addrDetail){
-			// 팝업페이지에서 주소입력한 정보를 받아서 현 페이지에 정보를 등록함
+			// 팝업 페이지에서 입력한 주소를 받아서 현 페이지에 정보 등록
 			document.getElementById("member_addr").value = roadAddrPart1;
 			document.getElementById("member_addr_detail").value = roadAddrPart2 +" "+ addrDetail;
 	}
@@ -231,55 +231,40 @@
 				
 				<div id="form">
 					<div>
-						<div>
-							<input type="text" name="member_id" id="member_Id" maxlength="20" placeholder="  아이디" title="n" required="required" onkeyup="idCheckInit(join);" />
-							&nbsp;
-							<input type="button" value=" 중복 확인 " onclick="idCheck();"/>
-						</div>
+						<input type="text" name="member_id" maxlength="20" placeholder="  아이디" title="n" required="required" onkeyup="idCheckInit(join);" />
+						&nbsp;
+						<input type="button" value=" 중복 확인 " onclick="idCheck();"/>
 					</div>
 					<div>
-						<div>
-							<input type="password" name="member_pw" maxlength="20" placeholder="  비밀번호" required="required" onclick="idCheckConfirm();"/>
-						</div>
+					<div>
+						<input type="password" name="member_pw" maxlength="20" placeholder="  비밀번호" required="required" onclick="idCheckConfirm();"/>
 					</div>
 					<div>
-						<div>
-							<input type="text" name="member_name" placeholder="  이름" required="required" onclick="idCheckConfirm();"/>
-						</div>
+						<input type="text" name="member_name" placeholder="  이름" required="required" onclick="idCheckConfirm();"/>
 					</div>
 					<div>
-						<div>
-							<input type="text" name="member_email"  id="member_email" placeholder="  이메일" title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailCheckInit(join);"/>
-							&nbsp;
-							<input type="button" value=" 이메일 인증 " onclick="emailCheck();"/>
-						</div>
+						<input type="text" name="member_email"  id="member_email" placeholder="  이메일" title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailCheckInit(join);"/>
+						&nbsp;
+						<input type="button" value=" 이메일 인증 " onclick="emailCheck();"/>
 					</div>
 					<div>
-						<div>
-							<input type="text" name="member_email_auth" id="member_email_auth" placeholder="  인증번호를 입력하세요." title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailauthCheckInit(join);"/>
-							&nbsp;
-							<input type="button" value=" 인증 확인 " onclick="emailauthCheck();" />
-						</div>
+						<input type="text" name="member_email_auth" id="member_email_auth" placeholder="  인증번호를 입력하세요." title="n" required="required" onclick="idCheckConfirm();" onkeyup="emailauthCheckInit(join);"/>
+						&nbsp;
+						<input type="button" value=" 인증 확인 " onclick="emailauthCheck();" />
 					</div>
 					<div>
-						<div>
-							<input type="text" name="member_phone" placeholder="  번호  ex) 010-1234-5678" maxlength="13" required="required" onclick="idCheckConfirm();"/>
-						</div>
+						<input type="text" name="member_phone" placeholder="  번호  ex) 010-1234-5678" maxlength="13" required="required" onclick="idCheckConfirm();"/>
 					</div>
 					<div>
-						<div>
-							<input type="text" name="member_addr" id="member_addr" placeholder="  기본 주소" required="required" readonly="readonly" onclick=""/>
-							&nbsp;
-							<input type="button" value=" 주소 검색 " onclick="searchAddr();"/> <br/>
-							<input type="text" name="member_addr_detail" id="member_addr_detail" placeholder="  상세 주소" required="required" readonly="readonly" onclick=""/>
-						</div>
+						<input type="text" name="member_addr" id="member_addr" placeholder="  기본 주소" required="required" readonly="readonly"/>
+						&nbsp;
+						<input type="button" value=" 주소 검색 " onclick="searchAddr();"/> <br/>
+						<input type="text" name="member_addr_detail" id="member_addr_detail" placeholder="  상세 주소" required="required" readonly="readonly"/>
 					</div>
 					<br/>
-					<div>
-						<div id="signup">
-							<input type="submit" value="가입 하기"/>
-							<input type="button" value="취소" onclick="history.back();"/>
-						</div>
+					<div id="signup">
+						<input type="submit" value="가입 하기"/>
+						<input type="button" value="취소" onclick="history.back();"/>
 					</div>
 				</div>
 			</div>

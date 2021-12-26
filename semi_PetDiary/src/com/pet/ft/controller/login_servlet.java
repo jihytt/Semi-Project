@@ -293,7 +293,7 @@ public class login_servlet extends HttpServlet {
 			String clientSecret = "B9Pqf7aDXD";//애플리케이션 클라이언트 시크릿값";
 			String code = request.getParameter("code");
 			String state = request.getParameter("state");
-			String redirectURI = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
+			String redirectURI = URLEncoder.encode("http://localhost:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
 			String apiURL;
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 			apiURL += "client_id=" + clientId;
@@ -321,7 +321,9 @@ public class login_servlet extends HttpServlet {
 					res.append(inputLine);
 				}
 				br.close();
+				
 				if(responseCode==200) {
+					
 					JSONParser parsing = new JSONParser();
 					Object obj = parsing.parse(res.toString());
 					JSONObject jsonObj = (JSONObject)obj;
@@ -329,78 +331,62 @@ public class login_servlet extends HttpServlet {
 					access_token = (String)jsonObj.get("access_token");
 					refresh_token = (String)jsonObj.get("refresh_token");
 					
-					session.setAttribute("access_token", access_token);
-
+					String header = "Bearer " + access_token;
+					
+					String apiurl = "https://openapi.naver.com/v1/nid/me";
+					url = new URL(apiurl);
+					con = (HttpURLConnection)url.openConnection();
+					con.setRequestMethod("GET");
+					con.setRequestProperty("Authorization", header);
+					responseCode = con.getResponseCode();
+						
+					if(responseCode==200) { // 정상 호출
+						br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+					} else {  // 에러 발생
+						br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+					}
+							
+					res = new StringBuffer();
+					while ((inputLine = br.readLine()) != null) {
+						res.append(inputLine);
+					}
+					br.close();
+				
+					parsing = new JSONParser();
+					obj = parsing.parse(res.toString());
+					jsonObj = (JSONObject)obj;
+					JSONObject resObj = (JSONObject)jsonObj.get("response");
+						
+					String naver_id = (String)resObj.get("id"); // id 아니고 고유번호
+					String naver_email = (String)resObj.get("email");
+					String naver_name = (String)resObj.get("name");
+					String naver_phone = (String)resObj.get("mobile");
+						
+					String member_id = "@naver" + naver_id;
+						
+					dto = dao.SignUpIdChk(member_id);
+							
+					if (dto==null) {
+						// 추가 정보 입력 회원가입
+						request.setAttribute("member_id", member_id);
+						request.setAttribute("member_email", naver_email);
+						request.setAttribute("member_name", naver_name);
+						request.setAttribute("member_phone", naver_phone);
+						dispatch(request, response, "login/login_social.jsp");
+							
+					} else {
+						// 로그인
+						dto = dao.SocialLogin(member_id);
+						session.setAttribute("dto", dto);
+						session.setAttribute("member_no", dto.getMember_no());
+						session.setMaxInactiveInterval(3600);
+								
+						response.sendRedirect("main/main.jsp");
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-				    
-			response.sendRedirect("/semi_PetDiary/login.do?command=naver_confirm");
-		}
-			
-				
-		if("naver_confirm".equals(command)) {
-			
-			String token = (String)session.getAttribute("access_token");
-			String header = "Bearer " + token;
-			try {
-				String apiurl = "https://openapi.naver.com/v1/nid/me";
-				URL url = new URL(apiurl);
-				HttpURLConnection con = (HttpURLConnection)url.openConnection();
-				con.setRequestMethod("GET");
-				con.setRequestProperty("Authorization", header);
-				int responseCode = con.getResponseCode();
-				BufferedReader br;
-				
-				if(responseCode==200) { // 정상 호출
-					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-				} else {  // 에러 발생
-					br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-				}
-					
-				String inputLine;
-				StringBuffer res = new StringBuffer();
-				while ((inputLine = br.readLine()) != null) {
-					res.append(inputLine);
-				}
-				br.close();
-				JSONParser parsing = new JSONParser();
-				Object obj = parsing.parse(res.toString());
-				JSONObject jsonObj = (JSONObject)obj;
-				JSONObject resObj = (JSONObject)jsonObj.get("response");
-				
-				String naver_id = (String)resObj.get("id"); // id 아니고 고유번호
-				String naver_email = (String)resObj.get("email");
-				String naver_name = (String)resObj.get("name");
-				String naver_phone = (String)resObj.get("mobile");
-				
-				String member_id = "@naver" + naver_id;
-				
-				dto = dao.SignUpIdChk(member_id);
-					
-				if (dto==null) {
-					// 추가 정보 입력 회원가입
-					request.setAttribute("member_id", member_id);
-					request.setAttribute("member_email", naver_email);
-					request.setAttribute("member_name", naver_name);
-					request.setAttribute("member_phone", naver_phone);
-					dispatch(request, response, "login/login_social.jsp");
-					
-				} else {
-					// 로그인
-					dto = dao.SocialLogin(member_id);
-					session.setAttribute("dto", dto);
-					session.setAttribute("member_no", dto.getMember_no());
-					session.setMaxInactiveInterval(3600);
-						
-					response.sendRedirect("main/main.jsp");
-				}
-						
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
 		}
 			
 		if ("social_signUp".equals(command)) {
@@ -436,7 +422,6 @@ public class login_servlet extends HttpServlet {
 		// 카카오 로그인/회원가입 처리
 		if("kakao_login".equals(command)) {
 			
-
 			String client_id = "39cbfc25bdd943573118565016e1297d";
 			String redirect_uri = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=kakao_login", "UTF-8");
 			String code = request.getParameter("code");
@@ -472,72 +457,58 @@ public class login_servlet extends HttpServlet {
 					
 					session.setAttribute("k_access_token", access_token);
 					
+					String token = (String)session.getAttribute("k_access_token");
+					String header = "Bearer " + token;
+						
+					kakao_apiURL = "https://kapi.kakao.com/v1/user/access_token_info";
+					url = new URL(kakao_apiURL);
+					con = (HttpURLConnection)url.openConnection();
+					con.setRequestMethod("GET");
+					con.setRequestProperty("Authorization", header);
+					responseCode = con.getResponseCode();
+							
+					if(responseCode==200) { // 정상 호출
+						br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+					} else {  // 에러 발생
+						br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+					}
+							
+					res = new StringBuffer();
+					while ((inputLine = br.readLine()) != null) {
+						res.append(inputLine);
+					}
+					br.close();
+
+					parsing = new JSONParser();
+					obj = parsing.parse(res.toString());
+					jsonObj = (JSONObject)obj;
+					long kakao_id = (long) jsonObj.get("id");
+						
+					String member_id = "@kakao" + kakao_id;
+						
+					dto = dao.SignUpIdChk(member_id);
+							
+					if (dto==null) {
+						// 추가 정보 입력 회원가입
+						request.setAttribute("member_id", member_id);
+						dispatch(request, response, "login/login_kakao.jsp");
+								
+					} else {
+						// 로그인
+						dto = biz.SocialLogin(member_id);
+						session.setAttribute("dto", dto);
+						session.setAttribute("member_no", dto.getMember_no());
+						session.setMaxInactiveInterval(3600);
+								
+						response.sendRedirect("main/main.jsp");
+					}	
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			    
-			response.sendRedirect("/semi_PetDiary/login.do?command=kakao_confirm");
+			  
 		}
 			
-		if("kakao_confirm".equals(command)) {
-			String token = (String)session.getAttribute("k_access_token");
-			String header = "Bearer " + token;
-				
-			try {
-				String kakao_apiURL = "https://kapi.kakao.com/v1/user/access_token_info";
-				URL url = new URL(kakao_apiURL);
-				HttpURLConnection con = (HttpURLConnection)url.openConnection();
-				con.setRequestMethod("GET");
-				con.setRequestProperty("Authorization", header);
-				int responseCode = con.getResponseCode();
-				BufferedReader br;
-					
-				if(responseCode==200) { // 정상 호출
-					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-				} else {  // 에러 발생
-					br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-				}
-					
-				String inputLine;
-				StringBuffer res = new StringBuffer();
-				while ((inputLine = br.readLine()) != null) {
-					res.append(inputLine);
-				}
-				br.close();
-					
-				//System.out.println(response.toString());
-					
-				JSONParser parsing = new JSONParser();
-				Object obj = parsing.parse(res.toString());
-				JSONObject jsonObj = (JSONObject)obj;
-				long kakao_id = (long) jsonObj.get("id");
-				
-				String member_id = "@kakao" + kakao_id;
-				
-				dto = dao.SignUpIdChk(member_id);
-					
-				if (dto==null) {
-					// 추가 정보 입력 회원가입
-					request.setAttribute("member_id", member_id);
-					dispatch(request, response, "login/login_kakao.jsp");
-						
-				} else {
-					// 로그인
-					dto = biz.SocialLogin(member_id);
-					session.setAttribute("dto", dto);
-					session.setAttribute("member_no", dto.getMember_no());
-					session.setMaxInactiveInterval(3600);
-						
-					response.sendRedirect("main/main.jsp");
-				}
-						
-			} catch (Exception e) {
-				e.printStackTrace();
-			}			
-		}
-		
-		
 		// ID 찾기
 		if ("login_findId".equals(command)) {
 

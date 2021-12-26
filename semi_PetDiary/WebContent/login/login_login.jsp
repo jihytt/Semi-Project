@@ -84,7 +84,7 @@
 		<div id="naverLogin">
 <%
 		    String clientId = "n8OVzf4XjGNAd8jAA6Hi";//애플리케이션 클라이언트 아이디값";
-		    String redirectURI = URLEncoder.encode("http://152.70.250.165:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
+		    String redirectURI = URLEncoder.encode("http://localhost:8787/semi_PetDiary/login.do?command=naver_login", "UTF-8");
 		    SecureRandom random = new SecureRandom();
 		    String state = new BigInteger(130, random).toString();
 		    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";

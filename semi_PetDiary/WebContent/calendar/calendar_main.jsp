@@ -54,16 +54,20 @@ response.setContentType("text/html; charset=UTF-8");
 	
 		var view = document.getElementsByName('view');
 		
-		// 달력에 표시되는 일정 제목을 랜덤 색상으로 배정
+		// 달력에 표시되는 일정 제목 배경 색상 배정
 		for (var i = 0; view.length; i++){
 			var color = "#";
 			var letters = ['ffffb3', 'FEC2C2', 'D8ECB5', 'BEED67', 'C8ECFC', 'BCACFD', 'FFD2BC', 'FFA5BD', 'FCE6AF', 'B7F9F4', 'DECDFE', 'BA9DF4'];
-			color += letters[Math.floor(Math.random() * letters.length)];
+			if (i < letters.length) {
+				color += letters[i];
+			} else {
+				color += letters[Math.floor(Math.random() * letters.length)];
+			}
 			view[i].style.background = color;
 		}
 	}
 	
-	// 달력 위의 일정 제목 클릭 시 팝업창 OPEN
+	// 달력 위의 일정 제목 클릭 시 팝업창 열기
 	function calendar_list(year, month, d, member_no) {
 		var year = year;
 		var month = month;

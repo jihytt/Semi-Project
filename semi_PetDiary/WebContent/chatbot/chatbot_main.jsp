@@ -31,7 +31,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 	var Chat = (function(){
-	    var userName = " ";
 	 
 	    function init() {
 
@@ -47,12 +46,11 @@
 	        });
 	    }
 	 
-	    function createMessageTag(LR_className, senderName, message) {
+	    function createMessageTag(LR_className, message) {
 
 	        var chatLi = $('div.chat.form ul li').clone();
 	 
 	        chatLi.addClass(LR_className);
-	        chatLi.find('.sender span').text(senderName);
 	        chatLi.find('.message span').text(message);
 	 
 	        return chatLi;
@@ -60,8 +58,7 @@
 	 
 	    function sendMessage(message) {
 	        var data = {
-	            "senderName"    : " ",
-	            "message"       : message
+	            "message" : message
 	        };
 	        
 	        request(data);
@@ -89,18 +86,17 @@
 	    }
 	    
 	    function request(data) {
-	      	var LR = (data.senderName != userName)? "left" : "right";
-	        appendMessageTag("right", data.senderName, data.message);
-	        $('div.chat').scrollTop($('div.chat')[0].scrollHeight);
+	      	var LR = "right";
+	        appendMessageTag("right", data.message);
 	    }
 		
 		function response(data) {
-			var LR = (data.senderName != userName)? "left" : "right";
-			appendMessageTag("left", data.senderName, data.message);
+			var LR = "left";
+			appendMessageTag("left", data.message);
 		}
 		
-	    function appendMessageTag(LR_className, senderName, message) {
-	        var chatLi = createMessageTag(LR_className, senderName, message);
+	    function appendMessageTag(LR_className, message) {
+	        var chatLi = createMessageTag(LR_className, message);
 	        $('div.chat:not(.form) ul').append(chatLi);
 	        
 	        $("html, body").animate({ scrollTop: $(document).height() }, 500);
@@ -144,9 +140,6 @@
     <div class="chat form">
         <ul>
             <li>
-                <div class="sender">
-                    <span></span>
-                </div>
                 <div class="message">
                     <span></span>
                 </div>

@@ -1175,16 +1175,9 @@ public class pet_servlet extends HttpServlet {
 			String calendar_startdate = s_year + pet_util.isTwo(s_month) + pet_util.isTwo(s_date) + pet_util.isTwo(s_hour) + pet_util.isTwo(s_min);
 			String calendar_enddate = e_year + pet_util.isTwo(e_month) + pet_util.isTwo(e_date) + pet_util.isTwo(e_hour) + pet_util.isTwo(e_min);
 
-			CalendarDto CalDto = new CalendarDto();
-			CalDto.setCalendar_title(calendar_title);
-			CalDto.setCalendar_startdate(calendar_startdate);
-			CalDto.setCalendar_enddate(calendar_enddate);
-			CalDto.setCalendar_necessity(calendar_necessity);
-			CalDto.setCalendar_item(calendar_item);
-			CalDto.setCalendar_content(calendar_content);
-			CalDto.setMember_no(member_no);
+			CalendarDto CalDto = new CalendarDto(0, calendar_startdate, calendar_enddate, calendar_necessity, calendar_item, calendar_title, calendar_content, member_no);
+		
 			int res = dao.CalendarInsert(CalDto);
-
 
 			if (res > 0) {
 				jsResponse(response, "일정이 등록되었습니다.", CalendarDirectory + "main.jsp");
@@ -1238,9 +1231,9 @@ public class pet_servlet extends HttpServlet {
      		
      		int res = biz.CalendarDelete(calendar_no);
      		if (res > 0) {
-     			jsResponse(response, "삭제가 완료되었습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "삭제가 완료되었습니다.", "/semi_PetDiary/pet.do?command=calendar_list&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		} else {
-     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_list&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		}
      	}
      		
@@ -1282,9 +1275,9 @@ public class pet_servlet extends HttpServlet {
      		int res = biz.CalendarUpdate(dto);
      			
      		if (res > 0) {
-     			jsResponse(response, "수정이 완료되었습니다.", "/semi_PetDiary/pet.do?command="+"calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "수정이 완료되었습니다.", "/semi_PetDiary/pet.do?command="+"calendar_list&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		} else {
-     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_calList&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
+     			jsResponse(response, "오류가 발생했습니다.", "/semi_PetDiary/pet.do?command=calendar_list&year="+year+"&month="+month+"&date="+date+"&member_no="+member_no);
      		}
      	}
      	

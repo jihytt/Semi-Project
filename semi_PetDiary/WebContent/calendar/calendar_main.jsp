@@ -200,7 +200,7 @@ response.setContentType("text/html; charset=UTF-8");
 				<a class="date" style="color:<%=color%>; cursor: pointer" onclick="location.href='/semi_PetDiary/pet.do?command=calendar_insertform&year=<%=year%>&month=<%=month%>&date=<%=d%>&lastDay=<%=lastDay %>'"><%=d%></a>
 				<div>
 				<!-- 해당 날짜에 등록된 일정이 있으면 달력에 출력 -->
-				<a id="calendar_list" style="cursor: pointer; color: black" href="calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=member_no%>')">			
+				<a id="calendar_list" style="cursor: pointer; color: black" onclick="calendar_list('<%=year%>','<%=month%>','<%=d%>','<%=member_no%>')">			
 					<%=pet_util.getCalView(d, list)%>
 				</a>
 				</div>	

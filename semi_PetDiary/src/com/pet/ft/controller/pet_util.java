@@ -41,21 +41,6 @@ public class pet_util {
 		return dao.SelectLikeCount(seq);
 	}
 	
-
-	public static String fontColor(int date, int dayOfWeek) {
-		String color = "";
-		
-		if ((dayOfWeek-1+date) % 7 == 0) {
-			color= "blue";
-		} else if ((dayOfWeek-1+date)%7 == 1) {
-			color = "red";
-		} else {
-			color = "black";
-		}
-		
-		return color;
-	}
-	
 	public static String isTwo(String msg) {
 		return (msg.length() < 2)? "0"+msg : msg;
 	}

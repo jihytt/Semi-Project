@@ -113,22 +113,18 @@ public class chatbot_servlet extends HttpServlet {
 						e.printStackTrace();
 					}
 	 
-	        } catch (MalformedURLException e) {
-	                e.printStackTrace();
 	        } catch (IOException e) {
 	                e.printStackTrace();
 	        }
-			
 		}
 		
 		if("dialog".equals(command)) {
-			int member_no = (int) session.getAttribute("member_no");
 			String openApiURL = "http://aiopen.etri.re.kr:8000/Dialog";
 		    String accessKey = "b75624ad-9e2a-40da-9280-02e21b2e93dd";
 			String uuid = (String) session.getAttribute("uuid");
 			String method = "dialog";
 			String text = request.getParameter("message");
-			System.out.println(text);
+
 			Gson gson = new Gson();
 			 
 	        Map<String, Object> APIrequest = new HashMap<>();
@@ -141,84 +137,71 @@ public class chatbot_servlet extends HttpServlet {
 	        APIrequest.put("access_key", accessKey);
 	        APIrequest.put("argument", argument);
 	 
-	 
 	        URL url;
 	        Integer responseCode = null;
 	        String responBody = null;
 	        
-	        
 	        try {
-	                url = new URL(openApiURL);
-	                HttpURLConnection con = (HttpURLConnection)url.openConnection();
-	                con.setRequestMethod("POST");
-	                con.setDoOutput(true);
+	        	url = new URL(openApiURL);
+	        	HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	        	con.setRequestMethod("POST");
+	        	con.setDoOutput(true);
 	 
-	                DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-	                wr.write(gson.toJson(APIrequest).getBytes("UTF-8"));
-	                wr.flush();
-	                wr.close();
+	        	DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+	        	wr.write(gson.toJson(APIrequest).getBytes("UTF-8"));
+	        	wr.flush();
+	        	wr.close();
 	 
-	                responseCode = con.getResponseCode();
-	                InputStream is = con.getInputStream();
-	                byte[] buffer = new byte[is.available()];
-	                int byteRead = is.read(buffer);
-	                responBody = new String(buffer);
+	        	responseCode = con.getResponseCode();
+	        	InputStream is = con.getInputStream();
+	        	byte[] buffer = new byte[is.available()];
+	        	int byteRead = is.read(buffer);
+	        	responBody = new String(buffer);
 
-
-	                int a = responBody.indexOf("\"system_text\":") + "system_text".length() + 4;
-	                int b = responBody.indexOf("n\"") - 1;
+	        	int a = responBody.indexOf("\"system_text\":") + "system_text".length() + 4;
+	        	int b = responBody.indexOf("n\"") - 1;
 	                
-	                System.out.print(responBody.substring(a, b));
-	                String result = responBody.substring(a, b);
+	        	String result = responBody.substring(a, b);
 	                 
-	                JSONObject obj = new JSONObject();
-	                obj.put("senderName", "챗봇");
-	                obj.put("message", result);
+	        	JSONObject obj = new JSONObject();
+	        	obj.put("message", result);
 	                
-	                response.getWriter().print(obj);
+	        	response.getWriter().print(obj);
 	                
-	                if(result.indexOf("예약 완료되었습니다.") != -1) {
-	                	System.out.println("확인");
-	                	
-	            		String res = result.replaceAll(" ", "");
+	        	if(result.indexOf("예약 완료되었습니다.") != -1) {
+	        		String res = result.replaceAll(" ", "");
 	            		
-	            		System.out.println(res.substring(0,res.indexOf("월")));
+	        		System.out.println(res.substring(0,res.indexOf("월")));
 	            		
-	            		String month = res.substring(0,res.indexOf("월"));
-	            		String day = res.substring(res.indexOf("월") + 1, res.indexOf("일"));
-	            		String hour = res.substring(res.indexOf("일", 6) + 1, res.indexOf("시"));
-	            		String minute = "00";
-	            		String business_name = res.substring(res.indexOf("시") + 1, res.indexOf("매장"));
-	            		if(res.indexOf("분") != -1) {
-	            			minute = res.substring(res.indexOf("시") + 1, res.indexOf("분"));
-	            			business_name = res.substring(res.indexOf("분") + 1, res.indexOf("매장"));
-	            		}
+	        		String month = res.substring(0,res.indexOf("월"));
+	        		String day = res.substring(res.indexOf("월") + 1, res.indexOf("일"));
+	        		String hour = res.substring(res.indexOf("일", 6) + 1, res.indexOf("시"));
+	        		String minute = "00";
+	        		String business_name = res.substring(res.indexOf("시") + 1, res.indexOf("매장"));
+	        		if(res.indexOf("분") != -1) {
+	        			minute = res.substring(res.indexOf("시") + 1, res.indexOf("분"));
+	        			business_name = res.substring(res.indexOf("분") + 1, res.indexOf("매장"));
+	        		}
 	            		
-	            		month = isTwo(month);
-	            		day = isTwo(day);
-	            		hour = isTwo(hour);
-	            		minute = isTwo(minute);
+	        		month = isTwo(month);
+	        		day = isTwo(day);
+	        		hour = isTwo(hour);
+	        		minute = isTwo(minute);
+	        		
+	        		String book_date = "2021" + month + day;
+	        		String book_time = hour + ":" + minute;
 	            		
-	            		String book_date = "2021" + month + day;
-	            		String book_time = hour + ":" + minute;
-	            		
-	            		System.out.println(book_date + " "+ book_time);
-	            		
-	            		System.out.println(business_name);
-	            		
-	            		List<BusinessDto> list = biz.businessList();
-	            		for(BusinessDto dto : list) {
-	            			if(dto.getBusiness_name().equals(business_name)) {
-	            				System.out.println("오케!");
+	        		List<BusinessDto> list = biz.businessList();
+	        		for(BusinessDto dto : list) {
+	        			if(dto.getBusiness_name().equals(business_name)) {
 	            				
-	            				BookDto bokdto = new BookDto(0, book_date, book_time, dto.getBusiness_role(), dto.getBusiness_num(), (int)session.getAttribute("member_no"), null, null, null, null);
+	        				BookDto bokdto = new BookDto(0, book_date, book_time, dto.getBusiness_role(), dto.getBusiness_num(), (int)session.getAttribute("member_no"), null, null, null, null);
 	            				
-	            				int ires = bdao.bookInsert(bokdto);
-	            		        pet_sms.SendSMS(book_date, book_time, dto.getBusiness_num(), (int)session.getAttribute("member_no"));
-	            				System.out.println(ires);
-	            			}
-	            		}
-	                }
+	        				int ires = bdao.bookInsert(bokdto);
+	        				pet_sms.SendSMS(book_date, book_time, dto.getBusiness_num(), (int)session.getAttribute("member_no"));
+	        			}
+	        		}
+	        	}
 	                
 	        } catch (MalformedURLException e) {
 	                e.printStackTrace();

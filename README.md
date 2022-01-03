@@ -14,10 +14,11 @@
 - **담당 역할** :
   - 프로젝트 개발 환경 구축
   - ERD 모델링
-  - 로그인/회원가입
-  - SNS 로그인(KAKAO,NAVER)
-  - 캘린더
-  - 챗봇
+  - [로그인](https://github.com/jihytt/Semi-Project/blob/main/%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8/%EB%A1%9C%EA%B7%B8%EC%9D%B8.md)
+  - [회원가입](https://github.com/jihytt/Semi-Project/blob/main/%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.md)
+  - [SNS 로그인(KAKAO,NAVER)](https://github.com/jihytt/Semi-Project/blob/main/%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8/%EB%84%A4%EC%9D%B4%EB%B2%84%2C%EC%B9%B4%EC%B9%B4%EC%98%A4%20%EB%A1%9C%EA%B7%B8%EC%9D%B8.md)
+  - [캘린더](https://github.com/jihytt/Semi-Project/blob/main/%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8/%EC%BA%98%EB%A6%B0%EB%8D%94.md)
+  - [챗봇](https://github.com/jihytt/Semi-Project/blob/main/%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8/%EC%B1%97%EB%B4%87.md)
 
 <br/>
 
